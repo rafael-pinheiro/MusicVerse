@@ -1,9 +1,10 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiHandler } from "next";
+import config from 'config';
 
 const sessionOptions = {
-  password: "complex_password_at_least_32_characters_long",
-  cookieName: "myapp_cookiename",
+  password: config.session.secret as string,
+  cookieName: "musicverse",
 };
 
 export function withSession(handler: NextApiHandler) {
