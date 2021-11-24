@@ -1,4 +1,4 @@
-import config from 'config.json';
+import config from 'config';
 
 const { client_id, client_secret } = config.spotify;
 

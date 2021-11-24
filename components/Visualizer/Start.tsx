@@ -19,7 +19,7 @@ function Content({ activateAndClose }: { activateAndClose: () => void }) {
       maxWidth={350}
     >
       <Typography variant='h2' mb={5}>Almost there!</Typography>
-      <Typography variant='body' mb={3} textAlign='center'>Make sure you select "MusicVerse" as the device you are connected to on your spotify app</Typography>
+      <Typography variant='body' mb={3} textAlign='center'>Make sure you select &quot;MusicVerse&quot; as the device you are connected to on your spotify app</Typography>
       <Image
         alt="Spotify device: MusicVerse"
         src="/spotify-device-connection.png"

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
 import { serialize } from 'cookie';
-import config from 'config.json';
+import config from 'config';
 import { withSession } from 'infrastructure/session';
 
 const { client_id, client_secret, redirect_uri } = config.spotify;

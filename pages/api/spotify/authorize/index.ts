@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import config from 'config.json';
+import config from 'config';
 import { withSession } from 'infrastructure/session';
 
 const generateRandomString = () => Math.random().toString(36).substring(2, 15);
