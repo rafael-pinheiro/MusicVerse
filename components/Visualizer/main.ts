@@ -1,5 +1,4 @@
 import Player from 'hooks/usePlayer/Player';
-import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { Size } from './commonTypes';
 import LoopEngine from './engines/LoopEngine';
@@ -12,7 +11,7 @@ export const cleanup = () => {
   container.clearInstances();
 }
 
-export default function createPresentation(canvas: HTMLCanvasElement, player: Player) {
+export default function createVisualizer(canvas: HTMLCanvasElement, player: Player) {
   const size:Size = {
     width: window.innerWidth,
     height: window.innerHeight,
