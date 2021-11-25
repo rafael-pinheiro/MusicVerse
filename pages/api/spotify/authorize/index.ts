@@ -11,7 +11,14 @@ export default withSession(async function handler(
 ) {
   const state = generateRandomString();
   req.session.state = state;
-  await req.session.save();
+
+  try {
+    await req.session.save();
+  } catch(error) {
+    console.error(`Error while saving session: ${error}`);
+    return res.status(500).end();
+  }
+  
   
   const scope = 'streaming user-read-email user-read-private';
   const params = new URLSearchParams({

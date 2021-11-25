@@ -8,10 +8,19 @@ export default withSession(async function handler(
   res: NextApiResponse
 ) {
   const accessToken = req.session.spotify?.accessToken;
-  console.log(req.session);
+  
   if (!accessToken) {
     return res.status(401).end();
   }
 
-  res.send(await analysis(accessToken, req.query.id as string));
+  if (typeof req.query.id !== 'string') {
+    return res.status(400).end();
+  }
+
+  try {
+    res.send(await analysis(accessToken, req.query.id));
+  } catch(error) {
+    console.error(`Failed to fetch audio analysis: ${error}`);
+    return res.status(500).end();
+  }
 });
