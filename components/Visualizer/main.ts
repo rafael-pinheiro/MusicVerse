@@ -18,7 +18,7 @@ export default function createVisualizer(canvas: HTMLCanvasElement, player: Play
   };
   container.register<Size>('canvas.size', {useValue: size});
   container.register<HTMLCanvasElement>('canvas', {useValue: canvas});
-  container.register<SpotifyPlayer>('player', {useValue: player});
+  container.register<Player>('player', {useValue: player});
 
   const scene = container.resolve<SceneInterface>(MainScene);
   const loopEngine = container.resolve(LoopEngine);

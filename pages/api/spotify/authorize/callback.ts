@@ -64,7 +64,13 @@ export default withSession(async function handler(
   ]);
 
   // Session save should always be after custom cookies
-  await req.session.save();
+  try {
+    await req.session.save();
+  } catch(error) {
+    console.error(`Error while saving session: ${error}`);
+    return res.status(500).end();
+  }
+  
   
 
   res.redirect('/');

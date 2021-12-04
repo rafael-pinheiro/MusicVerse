@@ -1,4 +1,5 @@
 import EventEmitter from 'events';
+import { AudioAnalysis } from 'infrastructure/audio/types';
 import { useEffect, useState } from 'react';
 import Player from './Player';
 
@@ -29,14 +30,6 @@ class SpotifyPlayer extends EventEmitter implements Player  {
   private accessToken: string;
   private player?: Spotify.Player;
   private previousTrackId = '';
-  private currentAnalysis = [];
-  private currentState: PlaybackState = {
-    track: '',
-    paused: true,
-    position: 0,
-    duration: 0,
-    updateTime: 0,
-  };
 
   constructor(accessToken: string) {
     super();
@@ -93,8 +86,8 @@ class SpotifyPlayer extends EventEmitter implements Player  {
   }
 
   async fetchAnalysis(trackId: string) {
-    this.currentAnalysis = await (await fetch(`/api/spotify/analysis/${trackId}`)).json();
-    this.emit('analysis', this.currentAnalysis);
+    const analysis: AudioAnalysis = await (await fetch(`/api/spotify/analysis/${trackId}`)).json();
+    this.emit('analysis', analysis);
   }
 
   disconnect() {

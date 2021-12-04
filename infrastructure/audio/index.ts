@@ -1,4 +1,6 @@
+import { duration } from '@mui/material';
 import config from 'config';
+import { AudioAnalysis } from './types';
 
 const { client_id, client_secret } = config.spotify;
 
@@ -34,14 +36,7 @@ const post = async <ResponseType>(data: Record<string, string>): Promise<Respons
   return response.json();
 }
 
-type Analysis = {
-  start: number;
-  end: number;
-  pitches: number[];
-  timbre: number[];
-}[];
-
-type AnalysisRespose = {
+type AnalysisResponse = {
   id: number;
   start: number;
   duration: number;
@@ -49,16 +44,26 @@ type AnalysisRespose = {
   timbre: number[];
 }
 
-export const analysis = async (accessToken: string, id: string): Promise<AnalysisRespose> => {
+type Beat = {
+  start: number;
+  duration: number;
+}
+
+export const analysis = async (accessToken: string, id: string): Promise<AudioAnalysis> => {
   const analysis = await get(accessToken, `https://api.spotify.com/v1/audio-analysis/${id}`);
   
-  return analysis.segments.map(({ start, duration, pitches, timbre}: AnalysisRespose, index: number) => ({
-    id: index,
-    start,
-    end: start + duration,
-    pitches,
-    timbre,
-  }));
+  return {
+    beats: analysis.beats.map(({ start, duration }: Beat) => ({
+      start,
+      end: start + duration,
+    })),
+    segments: analysis.segments.map(({ start, duration, pitches, timbre}: AnalysisResponse) => ({
+      start,
+      end: start + duration,
+      pitches,
+      timbre,
+    }))
+  };
 };
 
 type RefreshTokenResponse = {
